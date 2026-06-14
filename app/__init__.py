@@ -3,6 +3,7 @@
 # By YOUR NAME HERE
 #===========================================================
 
+from app.helpers.auth import admin_required
 from flask import Flask, request, session, render_template, flash, redirect, send_file, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
@@ -31,7 +32,8 @@ def show_welcome():
 #-----------------------------------------------------------
 # Creature list page - Show all the creatures
 #-----------------------------------------------------------
-@app.get("/creatures")
+@app.get("/users")
+@admin_required
 def show_all_creatures():
     with connect_db() as db:
         sql = """
@@ -39,9 +41,9 @@ def show_all_creatures():
             FROM creatures
         """
         params = ()
-        creatures = db.execute(sql, params).fetchall()
+        users = db.execute(sql, params).fetchall()
 
-        return render_template("pages/creature_list.jinja", creatures=creatures)
+        return render_template("pages/user_list.jinja", users=users)
 
 
 #-----------------------------------------------------------

@@ -11,7 +11,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Creatures {% block title %}{% endblock %}</title>
+	<title>Messages {% block title %}{% endblock %}</title>
 
     <link rel="icon" href="/static/images/icon.svg">
 
@@ -29,12 +29,21 @@
             <img src="/static/images/icon.svg" alt="Creature Icon" class="logo">
         </a>
 
-        <h1>Creatures</h1>
+        <h1>Epic Online Messenger</h1>
 
         <nav>
             <a href="/">Home</a>
-            <a href="/creatures">Creature List</a>
-            <a href="/help">Help</a>
+            {% if session.logged_in %}
+                <h4>Welcome {{ session["username"] }}</h4>
+                <a href="/creatures">Messages</a>
+            {% else %}
+                <a href="/creatures">Sign Up</a>
+                <a href="/creatures">Log in</a>
+            {% endif %}
+            {% if session.is_admin %}
+                <a href="/user_list">User List</a>
+            {% endif %}
+            
         </nav>
     </header>
 

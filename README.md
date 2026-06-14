@@ -1,16 +1,8 @@
-# Flask Project Template
+# Epic Online Messenger
 
-This is a starter for a [Flask web app](https://flask.palletsprojects.com/), built using [Python](https://www.python.org/), that using a [SQLite database](https://sqlite.org/), and [Jinja2 templates](https://jinja.palletsprojects.com/templates/).
-
-See the [docs folder](docs) for a quick-start and guides to usage. In particular:
-
-- [Setup](docs/guides/setup.md)
-- [Routes](docs/guides/routes.md) in Flask
-- [Jinja](docs/guides/jinja.md) templates
-- [DB Schema](docs/guides/schema.md)
-- [SQL Queries](docs/guides/sqlite.md)
-
-*For easier reading, the docs are hosted as a [GH Pages site](https://waimea-dt.github.io/flask-starter/)*
+This is a messaging app, built using [Python](https://www.python.org/), that using a [SQLite database](https://sqlite.org/), and [Jinja2 templates](https://jinja.palletsprojects.com/templates/).
+ 
+ You can do epic things like message your friends and 
 
 
 ## Project Structure
@@ -37,7 +29,8 @@ See the [docs folder](docs) for a quick-start and guides to usage. In particular
 │   ├── static/          # Files to be served directly
 │   │   ├── css/         # CSS stylesheets
 │   │   ├── images/      # Images
-│   │   └── js/          # Javascript files
+│   │   ├── js/          # Javascript files
+|   |   └── uploads/     # Icon image files
 │   │
 │   ├── db/              # Database files
 │   │   ├── config.py    # Database schema & seed data
@@ -48,17 +41,3 @@ See the [docs folder](docs) for a quick-start and guides to usage. In particular
 └── docs/                # Project documentation
     └── guides/          # Helpful guides
 ```
-
-## Useful Commands
-
-### Database Management
-- `flask db-show` - View database schema and all data
-- `flask db-schema` - Show just the schema
-- `flask db-data` - Show just the data
-- `flask db-reset` - Delete and recreate database with seed data
-- `flask db-clear` - Clear all data (keeps structure)
-
-### Development
-- `flask run` - Start the development server
-- `flask --help` - See all available commands
-
