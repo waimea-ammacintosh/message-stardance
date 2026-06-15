@@ -34,11 +34,11 @@ def show_welcome():
 #-----------------------------------------------------------
 @app.get("/users")
 @admin_required
-def show_all_creatures():
+def show_all_users():
     with connect_db() as db:
         sql = """
-            SELECT id, species, name
-            FROM creatures
+            SELECT id, forename, lastname, username
+            FROM users
         """
         params = ()
         users = db.execute(sql, params).fetchall()
@@ -58,6 +58,53 @@ def show_help():
     flash("Error test message", "error")
 
     return render_template("pages/help.jinja")
+
+#-----------------------------------------------------------
+# Login page
+#-----------------------------------------------------------
+@app.get("/")
+def show_login():
+    return render_template("pages/login.jinja")
+
+#-----------------------------------------------------------
+# Handle login form
+#-----------------------------------------------------------
+@app.post("/login")
+def process_login():
+    username = request.form.get("username", "").strip().lower()
+    password = request.form.get("password", "").strip()
+
+    with connect_db() as db:
+        sql = """
+                SELECT id, forename, surname, pw_hash, email, icon_file, is_admin
+                FROM users
+                WHERE username=? 
+            """
+        params = (username)
+        user = db.execute(sql, params).fetchone()
+
+        if not user:
+            flash("Unknown User", "error")
+            return redirect("/login")
+        
+        if not check_password_hash(user["pw_hash"], password):
+            flash("Incorrect Password", "error")
+            return redirect("/login")
+        
+        if user["admin"]:
+            session["admin"] = True
+
+        session["user"] = {
+            "id": user["id"],
+            "username": username,
+            "forename": user["forename"],
+            "lastname": user["lastname"],
+            "email": user["email"],
+            "icon_file": user["icon_file"]
+        }
+
+        flash("Login Successful", "success")
+        return redirect("/")
 
 
 #===========================================================

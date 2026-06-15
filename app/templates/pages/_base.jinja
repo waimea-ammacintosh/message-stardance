@@ -37,8 +37,8 @@
                 <h4>Welcome {{ session["username"] }}</h4>
                 <a href="/creatures">Messages</a>
             {% else %}
-                <a href="/creatures">Sign Up</a>
-                <a href="/creatures">Log in</a>
+                <a href="/users/new">Sign Up</a>
+                <a href="/login">Log in</a>
             {% endif %}
             {% if session.is_admin %}
                 <a href="/user_list">User List</a>

@@ -25,6 +25,7 @@ class UserTable:
             forename  TEXT NOT NULL,
             lastname  TEXT NOT NULL,
             username  TEXT NOT NULL,
+            email     TEXT NOT NULL,
             pw_hash   TEXT NOT NULL,
             icon_file TEXT NOT NULL,
             admin     BOOLEAN NOT NULL
@@ -32,6 +33,7 @@ class UserTable:
     """
 
     SEED_DATA = """
+        INSERT INTO users ('admin', 'admin', 'admin', )
     """
 
 # Add more table classes here...
