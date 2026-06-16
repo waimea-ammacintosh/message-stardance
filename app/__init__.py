@@ -11,7 +11,11 @@ from os import getenv
 from io import BytesIO
 import html
 from app.helpers import *
+from werkzeug.utils import secure_filename
+import uuid
+import os
 
+UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
 
 # Create the app
 app = Flask(__name__)
@@ -106,6 +110,45 @@ def process_login():
         flash("Login Successful", "success")
         return redirect("/")
 
+#-----------------------------------------------------------
+# Sign Up page
+#-----------------------------------------------------------
+@app.get("/users/new")
+def show_signup():
+    return render_template("pages/sign_up.jinja")
+
+#-----------------------------------------------------------
+# Handle user signup
+#-----------------------------------------------------------
+@app.post("/users/new")
+def process_new_user():
+    # get text inputs
+    forename = request.form.get("forename","").strip()
+    lastname = request.form.get("lastname", "").strip()
+    username = request.form.get("username", "").strip()
+    password = request.form.get("password", "").strip()
+
+    # get image file
+    image = request.files.get("image", None)
+
+    if not image or image.filename == "":
+        image_filename = "/images/default_icon.png"
+    else:
+        filename = secure_filename(image.filename)
+        random_prefix = uuid.uuid4().hex[:12]
+        image_filename = f"{random_prefix}_{filename}"
+
+    filepath = os.path.join(UPLOAD_FOLDER, image_filename)
+    image.save(filepath)
+
+    with connect_db as db:
+        sql="""
+            INSERT INTO users (forename, lastname, username, )
+            """
+
+
+
+    
 
 #===========================================================
 # Configure the app
